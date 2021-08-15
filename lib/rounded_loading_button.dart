@@ -14,13 +14,13 @@ class RoundedLoadingButton extends StatefulWidget {
 
   /// The callback that is called when
   /// the button is tapped or otherwise activated.
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
   /// The button's label
   final Widget child;
 
   /// The primary color of the button
-  final Color? color;
+  final Color color;
 
   /// The vertical extent of the button.
   final double height;
@@ -53,13 +53,13 @@ class RoundedLoadingButton extends StatefulWidget {
   final double elevation;
 
   /// The color of the button when it is in the error state
-  final Color? errorColor;
+  final Color errorColor;
 
   /// The color of the button when it is in the success state
-  final Color? successColor;
+  final Color successColor;
 
   /// The color of the button when it is disabled
-  final Color? disabledColor;
+  final Color disabledColor;
 
   Duration get _borderDuration {
     return Duration(milliseconds: (duration.inMilliseconds / 2).round());
@@ -67,10 +67,10 @@ class RoundedLoadingButton extends StatefulWidget {
 
   /// initalize constructor
   RoundedLoadingButton(
-      {Key? key,
-      required this.controller,
-      required this.onPressed,
-      required this.child,
+      {Key key,
+      this.controller,
+      this.onPressed,
+      this.child,
       this.color = Colors.lightBlue,
       this.height = 50,
       this.width = 300,
@@ -93,13 +93,13 @@ class RoundedLoadingButton extends StatefulWidget {
 /// Class implementation
 class RoundedLoadingButtonState extends State<RoundedLoadingButton>
     with TickerProviderStateMixin {
-  late AnimationController _buttonController;
-  late AnimationController _borderController;
-  late AnimationController _checkButtonControler;
+  AnimationController _buttonController;
+  AnimationController _borderController;
+  AnimationController _checkButtonControler;
 
-  late Animation _squeezeAnimation;
-  late Animation _bounceAnimation;
-  late Animation _borderAnimation;
+  Animation _squeezeAnimation;
+  Animation _bounceAnimation;
+  Animation _borderAnimation;
 
   final _state = BehaviorSubject<LoadingState>.seeded(LoadingState.idle);
 
@@ -215,7 +215,7 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
     _squeezeAnimation.addStatusListener((state) {
       if (state == AnimationStatus.completed && widget.animateOnTap) {
         if (widget.onPressed != null) {
-          widget.onPressed!();
+          widget.onPressed();
         }
       }
     });
@@ -246,7 +246,7 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
       _start();
     } else {
       if (widget.onPressed != null) {
-        widget.onPressed!();
+        widget.onPressed();
       }
     }
   }
@@ -284,11 +284,11 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
 /// Options that can be chosen by the controller
 /// each will perform a unique animation
 class RoundedLoadingButtonController {
-  late VoidCallback _startListener;
-  late VoidCallback _stopListener;
-  late VoidCallback _successListener;
-  late VoidCallback _errorListener;
-  late VoidCallback _resetListener;
+  VoidCallback _startListener;
+  VoidCallback _stopListener;
+  VoidCallback _successListener;
+  VoidCallback _errorListener;
+  VoidCallback _resetListener;
 
   _addListeners(
       VoidCallback startListener,
